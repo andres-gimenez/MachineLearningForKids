@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32127.271
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MachineLearningForKids", "MachineLearningForKids\MachineLearningForKids.csproj", "{2A0D6993-B4E1-427B-A981-3FFD18EF4052}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2A0D6993-B4E1-427B-A981-3FFD18EF4052}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A0D6993-B4E1-427B-A981-3FFD18EF4052}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A0D6993-B4E1-427B-A981-3FFD18EF4052}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A0D6993-B4E1-427B-A981-3FFD18EF4052}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {58755F2A-7F12-419A-8C67-35C557A5C48E}
+	EndGlobalSection
+EndGlobal
