@@ -9,7 +9,10 @@ namespace MachineLearningForKids
         public string ClassName { get; set; }
 
         [JsonPropertyName("confidence")]
-        public int Confidence { get; set; }
+        public double Confidence { get; set; }
+
+        [JsonIgnore]
+        public double ConfidencePercent => (double)Confidence / 100.0;
 
         [JsonPropertyName("classifierTimestamp")]
         public DateTime classifierTimestamp { get; set; }

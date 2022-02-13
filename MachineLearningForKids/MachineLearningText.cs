@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MachineLearningForKids
@@ -53,21 +50,28 @@ namespace MachineLearningForKids
         /// <param name="key">API key - the secret code for your ML project</param>
         /// <param name="text">The text that you want your ML model to classify</param>
         /// <param name="label">the training bucket to put text into</param>
-        public static void StoreText(string key, string text, string label)
+        public static async Task StoreText(string key, string text, string label)
         {
             MachineLearningModel.CheckApiKey(key);
 
-            //  url = ("https://machinelearningforkids.co.uk/api/scratch/" +
-            //         key +
-            //         "/train")
+            HttpClient client = new HttpClient();
 
-            //  response = requests.post(url,
-            //                           json ={ "data" : text, "label" : label })
+            string url = $"https://machinelearningforkids.co.uk/api/scratch/{key}/train";
 
-            //  if response.ok == False:
-            //    #if something went wrong, display the error
-            //    print (response.json())
+            var scratch = new Scratch
+            {
+                Data = text,
+                Label = label
+            };
 
+            var response = await client.PostAsJsonAsync(url, scratch);
+
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                var result = await response.Content.ReadFromJsonAsync<ErrorResult>();
+
+                throw new Exception(result.Error);
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace MachineLearningForKids
@@ -29,54 +29,51 @@ namespace MachineLearningForKids
         /// training examples in your project
         /// </summary>
         /// <param name="key">API key - the secret code for your ML project</param>
-        public static void TrainModel(string key)
+        public static async Task TrainModel(string key)
         {
             CheckApiKey(key);
-        
 
-  //url = ("https://machinelearningforkids.co.uk/api/scratch/" + 
-  //       key + 
-  //       "/models")
+            HttpClient client = new HttpClient();
 
-  //response = requests.post(url)
+            string url = $"https://machinelearningforkids.co.uk/api/scratch/{key}/models";
 
-  //if response.ok == False:
-  //  #if something went wrong, display the error
-  //  print (response.json())
-    }
+            var response = await client.PostAsJsonAsync(url, new object());
+
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                var result = await response.Content.ReadFromJsonAsync<ErrorResult>();
+
+                throw new Exception(result.Error);
+            }
+        }
 
         /// <summary>
         /// This function will check the training status of the 
         /// machine learning model for your project
         /// </summary>
         /// <param name="key">API key - the secret code for your ML project.</param>
-        public static void CheckModel(string key)
+        public static async Task<StatusResult> CheckModel(string key)
         {
             CheckApiKey(key);
 
-            //  url = ("https://machinelearningforkids.co.uk/api/scratch/" + 
-            //         key + 
-            //         "/status")
+            HttpClient client = new HttpClient();
 
-            //  response = requests.get(url)
+            string url = $"https://machinelearningforkids.co.uk/api/scratch/{key}/status";
 
-            //  if response.ok:
-            //    responseData = response.json()
+            var response = await client.GetAsync(url);
 
-            //    status = {
-            //      2 : "ready to use",
-            //      1 : "training is in progress",
-            //      0 : "problem"
-            //    }
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                var status = await response.Content.ReadFromJsonAsync<StatusResult>();
 
-            //    return { 
-            //      "status" : status[responseData["status"]], 
-            //      "msg" : responseData["msg"] 
-            //    }
-            //  else:
-            //#if something went wrong, display the error
-            //    print (response.json())
-            //    }
+                return status;
+            }
+            else
+            {
+                var result = await response.Content.ReadFromJsonAsync<ErrorResult>();
+
+                throw new Exception(result.Error);
+            }
         }
     }
 }
